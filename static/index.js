@@ -292,6 +292,91 @@ function enableAudioContext() {
 }
 
 // Fixed startChat function with proper credential handling
+// async function startChat() {
+//     try {
+//         const response = await fetch('/api/start-chat', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+
+//         const data = await response.json();
+//         console.log("Start chat response:", data);
+
+//         if (data.success) {
+//             visitorId = data.visitor_id;
+//             threadId = data.thread_id;
+//             currentVisitorId = data.visitor_id;
+
+//             // Check if HeyGen credentials are present and properly formatted
+//             if (data.heygen && Object.keys(data.heygen).length > 0) {
+//                 console.log("HeyGen data received:", data.heygen);
+                
+//                 // Extract credentials from the correct fields
+//                 heygenSessionId = data.heygen.session_id;
+//                 heygenAccessToken = data.heygen.access_token;
+                
+//                 // Use 'url' field for LiveKit connection
+//                 heygenWsUrl = data.heygen.url;
+                
+//                 // Use 'realtime_endpoint' for WebRTC signaling
+//                 heygenRealtimeUrl = data.heygen.realtime_endpoint;
+
+//                 console.log("HeyGen credentials set:", {
+//                     sessionId: heygenSessionId ? "Present" : "Missing",
+//                     accessToken: heygenAccessToken ? "Present" : "Missing",
+//                     liveKitUrl: heygenWsUrl || "Missing",
+//                     realtimeUrl: heygenRealtimeUrl || "Missing"
+//                 });
+
+//                 // Only initialize if we have the required credentials
+//                 if (heygenSessionId && heygenAccessToken && heygenWsUrl && heygenRealtimeUrl) {
+//                     console.log("Initializing HeyGen connections...");
+                    
+//                     // Initialize connections with small delay
+//                     setTimeout(async () => {
+//                         await initHeyGenWebRTC();
+//                         await connectToHeyGenLiveKit();
+//                     }, 500);
+//                 } else {
+//                     console.warn("Missing required HeyGen credentials");
+//                 }
+//             } else {
+//                 console.warn("HeyGen credentials not received in response");
+//                 console.log("Full response data:", data);
+//             }
+
+//             // Show chat screen
+//             document.getElementById('start-screen').style.display = 'flex';
+//             const chatScreen = document.getElementById('chat-screen');
+//             chatScreen.style.display = 'flex';
+//             chatScreen.style.flexDirection = 'column';
+//             chatScreen.style.flex = '1';
+
+//             joinChatRoom(visitorId);
+
+//             if (data.initial_message) {
+//                 displayMessage({
+//                     type: 'bot',
+//                     message: data.initial_message,
+//                     timestamp: new Date().toISOString()
+//                 });
+//             }
+
+//             window.currentVisitorId = visitorId;
+//             document.getElementById('message-input').focus();
+//         } else {
+//             alert('Failed to start chat: ' + data.error);
+//         }
+//     } catch (error) {
+//         console.error('Error starting chat:', error);
+//         alert('Error starting chat: ' + error.message);
+//     }
+// }
+
+// Replace your startChat function with this corrected version:
+
 async function startChat() {
     try {
         const response = await fetch('/api/start-chat', {
@@ -347,11 +432,13 @@ async function startChat() {
                 console.log("Full response data:", data);
             }
 
-            // Show chat screen
-            document.getElementById('start-screen').style.display = 'none';
+            // FIXED: Show chat screen properly
+            document.getElementById('start-screen').style.display = 'none';  // Hide start screen
             const chatScreen = document.getElementById('chat-screen');
-            chatScreen.style.display = 'flex';
-            chatScreen.style.flexDirection = 'column';
+            chatScreen.style.display = 'flex';        // Show as flex
+            chatScreen.style.flexDirection = 'row';   // Set to row for side-by-side layout
+            
+            // Optional: Ensure it takes full height
             chatScreen.style.flex = '1';
 
             joinChatRoom(visitorId);
@@ -535,7 +622,7 @@ async function stopChat() {
             console.log('Chat stopped successfully');
             // Reset the UI
             document.getElementById('chat-screen').style.display = 'none';
-            document.getElementById('start-screen').style.display = 'block';
+            document.getElementById('start-screen').style.display = 'flex';
             
             // Reset variables
             visitorId = null;
