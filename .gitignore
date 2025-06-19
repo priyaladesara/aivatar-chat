@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+pip-wheel-metadata/
+
+# Environment variables
+.env
+
+# VS Code settings
+.vscode/
+
+# macOS
+.DS_Store
+
+# Python egg and dist info
+*.egg-info/
+dist/
+build/
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Log files
+*.log
+
+# Coverage & testing
+htmlcov/
+.coverage
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Static generated files (optional if built dynamically)
+*.webm
+*.mp4
+*.wav
+
+# Flask stuff
+instance/
+*.db
+
+# older versions
+oldapp.py
+static/indexold.js

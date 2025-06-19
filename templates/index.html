@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <title>Video-Chat Interface</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>WotNot Chat Interface</h2>
+      <div id="connection-status" class="status">Disconnected</div>
+    </div>
+
+    <div id="start-screen" class="start-chat">
+      <h3>Welcome to WotNot Chat</h3>
+      <p>Click the button below to start a new conversation</p>
+      <button onclick="startChat()">Start Chat</button>
+    </div>
+
+    <div id="chat-screen" class="chat-screen-hidden">
+      <div id="chat-messages" class="chat-messages"></div>
+      
+      <div id="heygen-video-container" class="video-container-hidden">
+        <video id="heygen-video" autoplay muted playsinline class="video-element"></video>
+      </div>
+
+      <div class="chat-input">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="Type your message..."
+          onkeypress="handleKeyPress(event)"
+        />
+        <button onclick="sendMessage()" id="send-button">Send</button>
+        <button onclick="stopChat()" class="leave-chat-btn">Leave Chat</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
